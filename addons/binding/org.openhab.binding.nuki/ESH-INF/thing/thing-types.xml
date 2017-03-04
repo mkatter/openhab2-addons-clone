@@ -4,21 +4,50 @@
         xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0"
         xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
 
-    <!-- Sample Thing Type -->
-    <thing-type id="sample">
-        <label>Nuki Binding Thing</label>
-        <description>Sample thing for Nuki Binding</description>
+    <!-- Nuki Bridge (Bridge Type) -->
+    <bridge-type id="bridge">
+        <label>Nuki Bridge</label>
+        <description>This bridge represents a Nuki Bridge on your local network. Nuki Smart Locks have to be paired via Bluetooth with it.</description>
+        <config-description>
+            <parameter name="IP" type="text" required="true">
+                <label>IP Address</label>
+                <description>The IP Address of the Nuki Bridge.</description>
+            </parameter>
+            <parameter name="PORT" type="integer" required="true">
+                <label>Port</label>
+                <description>The Port on whicht the Nuki Bridge REST API runs.</description>
+                <default>8080</default>
+            </parameter>
+            <parameter name="APITOKEN" type="text" required="true">
+                <label>API Token</label>
+                <description>The API Token configured via the Nuki App when enabling the API/IFTTT.</description>
+            </parameter>
+        </config-description>
+    </bridge-type>
 
+    <!-- Nuki Smart Lock (Thing Type) -->
+    <thing-type id="smartLock">
+        <supported-bridge-type-refs>
+            <bridge-type-ref id="bridge"/>
+        </supported-bridge-type-refs>
+        <label>Nuki Smart Lock</label>
+        <description>Nuki Smart Lock which is paired via Bluetooth to a Nuki Bridge.</description>
         <channels>
-            <channel id="channel1" typeId="sample-channel"/>
+            <channel id="smartLockOpenClose" typeId="channelTypeSmartLockOpenClose"/>
         </channels>
+        <config-description>
+            <parameter name="NUKIID" type="text" required="true">
+                <label>Nuki ID</label>
+                <description>The ID of the Nuki Smart Lock.</description>
+            </parameter>
+        </config-description>
     </thing-type>
 
-    <!-- Sample Channel Type -->
-    <channel-type id="sample-channel">
-        <item-type>nukiItem</item-type>
-        <label>Nuki Binding Channel</label>
-        <description>Sample channel for Nuki Binding</description>
+    <!-- Channel Type -->
+    <channel-type id="channelTypeSmartLockOpenClose">
+        <item-type>Switch</item-type>
+        <label>Nuki Smart Lock Open/Close</label>
+        <description>Nuki Smart Lock channel to open or close the door.</description>
     </channel-type>
 
 </thing:thing-descriptions>
