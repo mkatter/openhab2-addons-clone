@@ -37,6 +37,7 @@ public class NukiSmartLockHandler extends BaseThingHandler {
 
     public NukiSmartLockHandler(Thing thing) {
         super(thing);
+        logger.trace("Instantiating NukiSmartLockHandler({})", thing);
     }
 
     @Override

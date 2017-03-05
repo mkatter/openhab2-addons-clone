@@ -41,7 +41,7 @@ public class NukiHttpServer extends AbstractHandler {
     private NukiBridgeHandler listener;
 
     public static NukiHttpServer getInstance(Configuration configuration, NukiBridgeHandler listener) {
-        logger.debug("Requesting NukiHttpServer instance.");
+        logger.trace("Getting NukiHttpServer instance[{}]", instance);
         if (instance == null) {
             instance = new NukiHttpServer(configuration, listener);
         }
@@ -49,13 +49,14 @@ public class NukiHttpServer extends AbstractHandler {
     }
 
     protected NukiHttpServer(Configuration configuration, NukiBridgeHandler listener) {
+        logger.trace("Instantiating NukiHttpServer({})", configuration);
         this.listener = listener;
         BigDecimal configCallbackPort = (BigDecimal) configuration.get(NukiBindingConstants.CONFIG_CALLBACK_PORT);
         server = new Server(configCallbackPort.intValue());
         server.setHandler(this);
         try {
-            logger.debug("Creating new NukiHttpServer instance on PORT[{}]", configCallbackPort);
             server.start();
+            logger.debug("Started new NukiHttpServer instance on PORT[{}]", configCallbackPort);
         } catch (Exception e) {
             logger.error("Could not start NukiHttpServer! ERROR: {}", e.getMessage());
             e.printStackTrace();
@@ -66,6 +67,7 @@ public class NukiHttpServer extends AbstractHandler {
         try {
             if (server.isStarted()) {
                 server.stop();
+                logger.trace("Stopped NukiHttpServer");
             }
         } catch (Exception e) {
             logger.error("Could not stop NukiHttpServer! ERROR: {}", e.getMessage());
@@ -88,7 +90,7 @@ public class NukiHttpServer extends AbstractHandler {
             logger.error("Could not handle request! Message[{}]", e.getMessage());
             e.printStackTrace();
         }
-        logger.debug("requestContent[{}]", requestContent);
+        logger.trace("requestContent[{}]", requestContent);
         BridgeApiLockStateRequestDto bridgeApiLockStateRequestDto = new Gson().fromJson(requestContent.toString(),
                 BridgeApiLockStateRequestDto.class);
         response.setContentType("application/json;charset=utf-8");

@@ -36,12 +36,14 @@ public class NukiHttpClient {
     private Configuration configuration;
 
     public NukiHttpClient(Configuration configuration) {
+        logger.trace("Instantiating NukiHttpClient({})", configuration);
         this.configuration = configuration;
         this.httpClient = new HttpClient();
         long connectTimeout = NukiBindingConstants.CLIENT_CONNECTTIMEOUT;
         httpClient.setConnectTimeout(connectTimeout);
         try {
             httpClient.start();
+            logger.debug("Started httpClient[{}]", httpClient);
         } catch (Exception e) {
             logger.error("Could not start NukiHttpClient! ERROR: {}", e.getMessage());
             e.printStackTrace();
@@ -52,6 +54,7 @@ public class NukiHttpClient {
         try {
             if (httpClient.isStarted()) {
                 httpClient.stop();
+                logger.trace("Stopped NukiHttpClient");
             }
         } catch (Exception e) {
             logger.error("Could not stop NukiHttpClient! ERROR: {}", e.getMessage());
@@ -65,11 +68,11 @@ public class NukiHttpClient {
         BigDecimal configPort = (BigDecimal) configuration.get(NukiBindingConstants.CONFIG_PORT);
         String configApiToken = (String) configuration.get(NukiBindingConstants.CONFIG_APITOKEN);
         String uri = String.format(NukiBindingConstants.URI_INFO, configIp, configPort, configApiToken);
-        logger.debug("uri[{}]", uri);
+        logger.trace("uri[{}]", uri);
         try {
             ContentResponse contentResponse = httpClient.GET(uri);
             String contentResponseAsString = contentResponse.getContentAsString();
-            logger.debug("contentResponseAsString[{}]", contentResponseAsString);
+            logger.trace("contentResponseAsString[{}]", contentResponseAsString);
             BridgeApiInfoDto bridgeApiInfoDto = new Gson().fromJson(contentResponseAsString, BridgeApiInfoDto.class);
             BridgeInfoResponse bridgeInfoResponse = new BridgeInfoResponse(contentResponse.getStatus(), "");
             bridgeInfoResponse.setBridgeInfo(bridgeApiInfoDto);
@@ -91,11 +94,11 @@ public class NukiHttpClient {
         BigDecimal configPort = (BigDecimal) configuration.get(NukiBindingConstants.CONFIG_PORT);
         String configApiToken = (String) configuration.get(NukiBindingConstants.CONFIG_APITOKEN);
         String uri = String.format(NukiBindingConstants.URI_LOCKSTATE, configIp, configPort, configApiToken, nukiId);
-        logger.debug("uri[{}]", uri);
+        logger.trace("uri[{}]", uri);
         try {
             ContentResponse contentResponse = httpClient.GET(uri);
             String contentResponseAsString = contentResponse.getContentAsString();
-            logger.debug("contentResponseAsString[{}]", contentResponseAsString);
+            logger.trace("contentResponseAsString[{}]", contentResponseAsString);
             int status = contentResponse.getStatus();
             if (status == 200) {
                 BridgeApiLockStateDto bridgeApiLockStateDto = new Gson().fromJson(contentResponseAsString,
@@ -119,16 +122,17 @@ public class NukiHttpClient {
     }
 
     public BridgeLockActionResponse getBridgeLockAction(String nukiId, int lockAction) {
+        logger.debug("NukiHttpClient:getBridgeLockAction({}, {})", nukiId, lockAction);
         String configIp = (String) configuration.get(NukiBindingConstants.CONFIG_IP);
         BigDecimal configPort = (BigDecimal) configuration.get(NukiBindingConstants.CONFIG_PORT);
         String configApiToken = (String) configuration.get(NukiBindingConstants.CONFIG_APITOKEN);
         String uri = String.format(NukiBindingConstants.URI_LOCKACTION, configIp, configPort, configApiToken, nukiId,
                 lockAction);
-        logger.debug("uri[{}]", uri);
+        logger.trace("uri[{}]", uri);
         try {
             ContentResponse contentResponse = httpClient.GET(uri);
             String contentResponseAsString = contentResponse.getContentAsString();
-            logger.debug("contentResponseAsString[{}]", contentResponseAsString);
+            logger.trace("contentResponseAsString[{}]", contentResponseAsString);
             int status = contentResponse.getStatus();
             if (status == 200) {
                 BridgeApiLockActionDto bridgeApiLockActionDto = new Gson().fromJson(contentResponseAsString,
