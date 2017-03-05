@@ -7,12 +7,14 @@
  */
 package org.openhab.binding.nuki.handler;
 
+import org.eclipse.smarthome.core.library.types.OnOffType;
 import org.eclipse.smarthome.core.thing.ChannelUID;
 import org.eclipse.smarthome.core.thing.Thing;
 import org.eclipse.smarthome.core.thing.ThingStatus;
 import org.eclipse.smarthome.core.thing.ThingStatusDetail;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
+import org.eclipse.smarthome.core.types.RefreshType;
 import org.openhab.binding.nuki.NukiBindingConstants;
 import org.openhab.binding.nuki.dataexchange.BridgeLockStateResponse;
 import org.openhab.binding.nuki.dataexchange.NukiHttpClient;
@@ -55,6 +57,20 @@ public class NukiSmartLockHandler extends BaseThingHandler {
     @Override
     public void handleCommand(ChannelUID channelUID, Command command) {
         logger.debug("NukiSmartLockHandler:handleCommand({}, {})", channelUID, command);
+        String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKIID);
+        if (nukiHttpClient == null) {
+            nukiHttpClient = getNukiHttpClient();
+        }
+        if (command.equals(RefreshType.REFRESH)) {
+            BridgeLockStateResponse bridgeLockStateResponse = nukiHttpClient.getBridgeLockState(nukiId);
+            if (bridgeLockStateResponse.getStatus() == 200) {
+                updateState(channelUID,
+                        (bridgeLockStateResponse.getBridgeLockState().getState() == 1 ? OnOffType.ON : OnOffType.OFF));
+            } else {
+                logger.error("Could not refresh Nuki Smart Lock[{}]! Message: {}", nukiId,
+                        bridgeLockStateResponse.getMessage());
+            }
+        }
         if (channelUID.getId().equals(NukiBindingConstants.CHANNEL_SMARTLOCKOPENCLOSE)) {
             logger.warn("Smart Lock Open/Close not yet implemented!");
         }
