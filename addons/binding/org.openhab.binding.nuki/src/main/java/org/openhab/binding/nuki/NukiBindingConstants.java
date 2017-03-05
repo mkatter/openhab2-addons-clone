@@ -20,7 +20,7 @@ import org.eclipse.smarthome.core.thing.ThingTypeUID;
  */
 public class NukiBindingConstants {
 
-    public static final String BINDING_ID = "nuki";
+    public final static String BINDING_ID = "nuki";
 
     // List of all Thing Type UIDs
     public final static ThingTypeUID THING_TYPE_BRIDGE = new ThingTypeUID(BINDING_ID, "bridge");
@@ -38,6 +38,13 @@ public class NukiBindingConstants {
     public final static String CONFIG_APITOKEN = "APITOKEN";
     public final static String CONFIG_NUKIID = "NUKIID";
 
+    // Nuki Bridge API REST Endpoints
+    public final static String URI_INFO = "http://%s:%s/info?token=%s";
+    public final static String URI_LOCKSTATE = "http://%s:%s/lockState?token=%s&nukiId=%s";
+    public final static String URI_LOCKACTION = "http://%s:%s/lockAction?token=%s&nukiId=%s&action=%s";
+    // NukiHttpClient
+    public final static long CLIENT_CONNECTTIMEOUT = 5000;
+    // Nuki Bridge API Lock Actions
     public final static int LOCKACTIONS_UNLOCK = 1;
     public final static int LOCKACTIONS_LOCK = 2;
 
