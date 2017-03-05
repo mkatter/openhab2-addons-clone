@@ -14,16 +14,20 @@ package org.openhab.binding.nuki.dataexchange;
  */
 public abstract class NukiBaseResponse {
 
-    private int statusCode;
+    private int status;
     private String message;
-    private String detail;
 
-    public int getStatusCode() {
-        return statusCode;
+    public NukiBaseResponse(int status, String message) {
+        this.status = status;
+        this.message = message;
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getMessage() {
@@ -32,14 +36,6 @@ public abstract class NukiBaseResponse {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
     }
 
 }

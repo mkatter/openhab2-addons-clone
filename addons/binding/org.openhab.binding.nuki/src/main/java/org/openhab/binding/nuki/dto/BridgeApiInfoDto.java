@@ -17,12 +17,12 @@ import java.util.List;
 public class BridgeApiInfoDto {
 
     private int bridgeType;
-    private BridgeApiInfoIdsDto ids;
-    private BridgeApiInfoVersionsDto versions;
+    private BridgeApiInfoIdDto ids;
+    private BridgeApiInfoVersionDto versions;
     private int uptime;
     private String currentTime;
     private boolean serverConnected;
-    private List<BridgeApiInfoScanResultsDto> scanResults;
+    private List<BridgeApiInfoScanResultDto> scanResults;
 
     public int getBridgeType() {
         return bridgeType;
@@ -32,19 +32,19 @@ public class BridgeApiInfoDto {
         this.bridgeType = bridgeType;
     }
 
-    public BridgeApiInfoIdsDto getIds() {
+    public BridgeApiInfoIdDto getIds() {
         return ids;
     }
 
-    public void setIds(BridgeApiInfoIdsDto ids) {
+    public void setIds(BridgeApiInfoIdDto ids) {
         this.ids = ids;
     }
 
-    public BridgeApiInfoVersionsDto getVersions() {
+    public BridgeApiInfoVersionDto getVersions() {
         return versions;
     }
 
-    public void setVersions(BridgeApiInfoVersionsDto versions) {
+    public void setVersions(BridgeApiInfoVersionDto versions) {
         this.versions = versions;
     }
 
@@ -72,11 +72,11 @@ public class BridgeApiInfoDto {
         this.serverConnected = serverConnected;
     }
 
-    public List<BridgeApiInfoScanResultsDto> getScanResults() {
+    public List<BridgeApiInfoScanResultDto> getScanResults() {
         return scanResults;
     }
 
-    public void setScanResults(List<BridgeApiInfoScanResultsDto> scanResults) {
+    public void setScanResults(List<BridgeApiInfoScanResultDto> scanResults) {
         this.scanResults = scanResults;
     }
 

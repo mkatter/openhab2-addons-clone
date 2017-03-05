@@ -16,6 +16,10 @@ import org.openhab.binding.nuki.dto.BridgeApiInfoDto;
  */
 public class BridgeInfoResponse extends NukiBaseResponse {
 
+    public BridgeInfoResponse(int status, String message) {
+        super(status, message);
+    }
+
     private BridgeApiInfoDto bridgeInfo;
 
     public BridgeApiInfoDto getBridgeInfo() {

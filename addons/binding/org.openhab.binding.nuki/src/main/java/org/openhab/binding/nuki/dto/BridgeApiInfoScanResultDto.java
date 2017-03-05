@@ -8,13 +8,13 @@
 package org.openhab.binding.nuki.dto;
 
 /**
- * The {@link BridgeApiInfoScanResultsDto} class defines the Data Transfer Object (POJO) for the Nuki Bridge API /info
+ * The {@link BridgeApiInfoScanResultDto} class defines the Data Transfer Object (POJO) for the Nuki Bridge API /info
  * endpoint.
- * It is a nested JSON object (subclass) of {@link BridgeApiInfoDto}.
+ * It is a nested JSON object of {@link BridgeApiInfoDto}.
  *
  * @author Markus Katter - Initial contribution
  */
-public class BridgeApiInfoScanResultsDto {
+public class BridgeApiInfoScanResultDto {
 
     private int nukiId;
     private String name;

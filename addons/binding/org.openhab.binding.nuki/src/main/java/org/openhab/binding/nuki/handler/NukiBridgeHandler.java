@@ -34,12 +34,16 @@ public class NukiBridgeHandler extends BaseBridgeHandler {
         super(bridge);
     }
 
+    public NukiHttpClient getNukiHttpClient() {
+        return nukiHttpClient;
+    }
+
     @Override
     public void initialize() {
         logger.debug("NukiBridgeHandler:initialize");
         nukiHttpClient = new NukiHttpClient(this.getConfig());
         BridgeInfoResponse bridgeInfoResponse = nukiHttpClient.getBridgeInfo();
-        if (bridgeInfoResponse.getStatusCode() == 200) {
+        if (bridgeInfoResponse.getStatus() == 200) {
             updateStatus(ThingStatus.ONLINE, ThingStatusDetail.NONE,
                     "Found " + bridgeInfoResponse.getBridgeInfo().getScanResults().size() + " Nuki Smart Locks.");
         } else {
