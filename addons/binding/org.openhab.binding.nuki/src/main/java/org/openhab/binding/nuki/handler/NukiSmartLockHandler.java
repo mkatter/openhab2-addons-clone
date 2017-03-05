@@ -15,6 +15,7 @@ import org.eclipse.smarthome.core.thing.ThingStatusDetail;
 import org.eclipse.smarthome.core.thing.binding.BaseThingHandler;
 import org.eclipse.smarthome.core.types.Command;
 import org.eclipse.smarthome.core.types.RefreshType;
+import org.eclipse.smarthome.core.types.State;
 import org.openhab.binding.nuki.NukiBindingConstants;
 import org.openhab.binding.nuki.dataexchange.BridgeLockActionResponse;
 import org.openhab.binding.nuki.dataexchange.BridgeLockStateResponse;
@@ -82,6 +83,12 @@ public class NukiSmartLockHandler extends BaseThingHandler {
         } else {
             logger.warn("NukiSmartLockHandler:handleCommand({}, {}) not implemented!", channelUID, command);
         }
+    }
+
+    @Override
+    public void handleUpdate(ChannelUID channelUID, State newState) {
+        logger.debug("NukiSmartLockHandler:handleUpdate({}, {})", channelUID, newState);
+        updateState(channelUID, newState);
     }
 
     private NukiHttpClient getNukiHttpClient() {

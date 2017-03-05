@@ -48,14 +48,14 @@ public class NukiHttpClient {
         }
     }
 
-    public void stop() {
-        if (httpClient.isStarted()) {
-            try {
+    public void stopClient() {
+        try {
+            if (httpClient.isStarted()) {
                 httpClient.stop();
-            } catch (Exception e) {
-                logger.error("Could not stop NukiHttpClient! ERROR: {}", e.getMessage());
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            logger.error("Could not stop NukiHttpClient! ERROR: {}", e.getMessage());
+            e.printStackTrace();
         }
     }
 

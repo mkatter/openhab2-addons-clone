@@ -37,6 +37,7 @@ public class NukiBindingConstants {
     public final static String CONFIG_PORT = "PORT";
     public final static String CONFIG_APITOKEN = "APITOKEN";
     public final static String CONFIG_NUKIID = "NUKIID";
+    public final static String CONFIG_CALLBACK_PORT = "CALLBACK_PORT";
 
     // Nuki Bridge API REST Endpoints
     public final static String URI_INFO = "http://%s:%s/info?token=%s";

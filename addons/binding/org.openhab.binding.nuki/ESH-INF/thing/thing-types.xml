@@ -15,12 +15,17 @@
             </parameter>
             <parameter name="PORT" type="integer" required="true">
                 <label>Port</label>
-                <description>The Port on whicht the Nuki Bridge REST API runs.</description>
+                <description>The Port on which the Nuki Bridge REST API runs.</description>
                 <default>8080</default>
             </parameter>
             <parameter name="APITOKEN" type="text" required="true">
                 <label>API Token</label>
                 <description>The API Token configured via the Nuki App when enabling the API/IFTTT.</description>
+            </parameter>
+            <parameter name="CALLBACK_PORT" type="integer" required="true">
+                <label>Callback Port</label>
+                <description>The port on the OpenHAB server to which the Nuki Bridge sends Lock State changes.</description>
+                <default>8081</default>
             </parameter>
         </config-description>
     </bridge-type>
