@@ -42,7 +42,7 @@ public class NukiSmartLockHandler extends BaseThingHandler {
 
     @Override
     public void initialize() {
-        logger.debug("NukiSmartLockHandler:initialize");
+        logger.debug("NukiSmartLockHandler:initialize()");
         String nukiId = (String) this.getConfig().get(NukiBindingConstants.CONFIG_NUKIID);
         if (nukiHttpClient == null) {
             nukiHttpClient = getNukiHttpClient();
@@ -92,11 +92,16 @@ public class NukiSmartLockHandler extends BaseThingHandler {
         updateState(channelUID, newState);
     }
 
+    @Override
+    public void dispose() {
+        logger.debug("NukiSmartLockHandler:dispose()");
+    }
+
     private NukiHttpClient getNukiHttpClient() {
         if (this.getBridge() != null && this.getBridge().getHandler() instanceof NukiBridgeHandler) {
             return ((NukiBridgeHandler) this.getBridge().getHandler()).getNukiHttpClient();
         }
-        logger.error("Could not get NukiHttpClient from NukiBridgeHandler!");
+        logger.error("Could not get NukiHttpClient from NukiBridgeHandler! Did you configure a Bridge for this Thing?");
         return null;
     }
 
