@@ -67,6 +67,7 @@ public class NukiHttpServer extends AbstractHandler {
         try {
             if (server.isStarted()) {
                 server.stop();
+                NukiHttpServer.instance = null;
                 logger.trace("Stopped NukiHttpServer");
             }
         } catch (Exception e) {
